@@ -6,4 +6,4 @@ function getRandomNum(min, max, digits) {
   return +(Math.random() * (max - min) + min).toFixed(digits);
 }
 
-console.log(getRandomNum(1, 15, 3));
+getRandomNum(1, 15, 3);
