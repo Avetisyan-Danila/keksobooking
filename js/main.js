@@ -26,7 +26,7 @@ function getAuthorAvatar () {
 
 const getRandomArrayElement = (elements) => elements[Math.floor(getRandomFloat(0, elements.length - 1))];
 
-const HOUSE_TYPE = [
+const HOUSE_TYPES = [
   'palace',
   'flat',
   'house',
@@ -34,13 +34,13 @@ const HOUSE_TYPE = [
   'hotel',
 ];
 
-const CHECKIN_TIME = [
+const CHECKIN_HOURS = [
   '12:00',
   '13:00',
   '14:00',
 ];
 
-const CHECKOUT_TIME = [
+const CHECKOUT_HOURS = [
   '12:00',
   '13:00',
   '14:00',
@@ -61,33 +61,48 @@ const PHOTOS = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg',
 ];
 
-const adAuthor = () => ({
+const createAdAuthor = () => ({
   avatar: `img/avatars/user${getAuthorAvatar()}.png`,
 });
 
-const adHouseLocation = () => ({
-  lat: getRandomFloat(35.65000, 35.7000, 5),
-  lng: getRandomFloat(139.70000, 139.80000, 5),
+const LAT_MIN = 35.65000;
+const LAT_MAX = 35.7000;
+const LNG_MIN = 139.70000;
+const LNG_MAX = 139.80000;
+
+const createAdHouseLocation = () => ({
+  lat: getRandomFloat(LAT_MIN, LAT_MAX, 5),
+  lng: getRandomFloat(LNG_MIN, LNG_MAX, 5),
 });
 
-const adOffer = () => ({
+const PRICE_MIN = 10000;
+const PRICE_MAX = 100000;
+
+const ROOMS_MIN = 1;
+const ROOMS_MAX = 5;
+
+const GUESTS_MIN = 1;
+const GUESTS_MAX = 3;
+
+const createAdOffer = () => ({
   title: 'Квартира в новостройке',
-  address: `${adHouseLocation().lat}, ${adHouseLocation().lng}`,
-  price: Math.floor(getRandomFloat(10000, 100000)),
-  type: getRandomArrayElement(HOUSE_TYPE),
-  rooms: Math.floor(getRandomFloat(1, 5)),
-  guests: Math.floor(getRandomFloat(1, 3)),
-  checkin: getRandomArrayElement(CHECKIN_TIME),
-  checkout: getRandomArrayElement(CHECKOUT_TIME),
+  address: `${createAdHouseLocation().lat}, ${createAdHouseLocation().lng}`,
+  price: Math.floor(getRandomFloat(PRICE_MIN, PRICE_MAX)),
+  type: getRandomArrayElement(HOUSE_TYPES),
+  rooms: Math.floor(getRandomFloat(ROOMS_MIN, ROOMS_MAX)),
+  guests: Math.floor(getRandomFloat(GUESTS_MIN, GUESTS_MAX)),
+  checkin: getRandomArrayElement(CHECKIN_HOURS),
+  checkout: getRandomArrayElement(CHECKOUT_HOURS),
   features: Array.from(new Set(new Array(Math.floor(getRandomFloat(1, FEATURES.length + 1))).fill(null).map(() => getRandomArrayElement(FEATURES)))),
   description: 'Просторная, уютная',
   photos: Array.from(new Set(new Array(Math.floor(getRandomFloat(1, PHOTOS.length + 1))).fill(null).map(() => getRandomArrayElement(PHOTOS)))),
 });
 
-const AD_COUNT = 10;
+const ADS_COUNT = 10;
 
-const ads = new Array(AD_COUNT).fill(null).map(() => ({
-  author : adAuthor(),
-  offer : adOffer(),
-  location : adHouseLocation(),
+// eslint-disable-next-line no-unused-vars
+const similarAds = new Array(ADS_COUNT).fill(null).map(() => ({
+  author : createAdAuthor(),
+  offer : createAdOffer(),
+  location : createAdHouseLocation(),
 }));
