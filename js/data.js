@@ -1,4 +1,4 @@
-import {getRandomFloat, getRandomArrayElement, getAuthorAvatar} from './util';
+import {getRandomFloat, getRandomArrayElement, getAuthorAvatar} from './util.js';
 
 const HOUSE_TYPES = [
   'palace',
@@ -74,4 +74,11 @@ const createAdOffer = () => ({
   photos: Array.from(new Set(new Array(Math.floor(getRandomFloat(1, PHOTOS.length + 1))).fill(null).map(() => getRandomArrayElement(PHOTOS)))),
 });
 
-export {ADS_COUNT, createAdAuthor, createAdHouseLocation, createAdOffer};
+// eslint-disable-next-line no-unused-vars
+const similarAds = new Array(ADS_COUNT).fill(null).map(() => ({
+  author : createAdAuthor(),
+  offer : createAdOffer(),
+  location : createAdHouseLocation(),
+}));
+
+export {similarAds};
