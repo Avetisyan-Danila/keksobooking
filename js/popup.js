@@ -4,6 +4,7 @@ const similarAdsTemplate = document.querySelector('#card')
   .content
   .querySelector('.popup');
 
+const similarAdsElements = [];
 const map = document.querySelector('#map-canvas');
 
 const createSimilarAdsPopup = () => {
@@ -64,8 +65,9 @@ const createSimilarAdsPopup = () => {
 
     adElement.querySelector('.popup__avatar').src = author.avatar;
 
-    map.appendChild(adElement);
+    similarAdsElements.push(adElement);
   });
+  map.appendChild(similarAdsElements[0]);
 };
 
 export {createSimilarAdsPopup};
