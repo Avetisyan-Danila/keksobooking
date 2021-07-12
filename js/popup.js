@@ -5,7 +5,6 @@ const similarAdsTemplate = document.querySelector('#card')
   .querySelector('.popup');
 
 const similarAdsElements = [];
-const map = document.querySelector('#map-canvas');
 
 const createSimilarAdsPopup = () => {
   similarAds.forEach(({author, offer}) => {
@@ -67,7 +66,6 @@ const createSimilarAdsPopup = () => {
 
     similarAdsElements.push(adElement);
   });
-  map.appendChild(similarAdsElements[0]);
 };
 
-export {createSimilarAdsPopup};
+export {createSimilarAdsPopup, similarAdsElements};
