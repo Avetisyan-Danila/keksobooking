@@ -1,29 +1,26 @@
-function getRandomFloat(min, max, digits = 1) {
-  if (
-    min > max ||
-    min === max ||
-    min < 0 ||
-    max <= 0 ||
-    digits < 0 ||
-    typeof(max) !== 'number' ||
-    typeof(min) !== 'number' ||
-    typeof(digits) !== 'number') {
-    return ('Задан неверный диапазон! Укажите другие числа.');
-  }
+const ALERT_SHOW_TIME = 5000;
 
-  return Number((Math.random() * (max - min) + min).toFixed(digits));
-}
+const showAlert = (message) => {
+  const alertContainer = document.createElement('div');
+  alertContainer.style.zIndex = 1000;
+  alertContainer.style.position = 'absolute';
+  alertContainer.style.left = 0;
+  alertContainer.style.top = 0;
+  alertContainer.style.right = 0;
+  alertContainer.style.padding = '20px 5px';
+  alertContainer.style.fontSize = '30px';
+  alertContainer.style.textAlign = 'center';
+  alertContainer.style.backgroundColor = '#ffaa99';
 
-function getAuthorAvatar () {
-  const imgNum = Math.floor(getRandomFloat(1, 11));
+  alertContainer.textContent = message;
 
-  if (imgNum < 10) {
-    return `0${imgNum}`;
-  }
+  document.body.append(alertContainer);
 
-  return imgNum.toString();
-}
+  setTimeout(() => {
+    alertContainer.remove();
+  }, ALERT_SHOW_TIME);
+};
 
-const getRandomArrayElement = (elements) => elements[Math.floor(getRandomFloat(0, elements.length - 1))];
+const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
 
-export {getRandomFloat, getRandomArrayElement, getAuthorAvatar};
+export {showAlert, isEscEvent};

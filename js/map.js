@@ -1,10 +1,9 @@
 import {deactivateForm, activateForm} from './form.js';
-import {similarAds} from './data.js';
-import {createSimilarAdsPopup, similarAdsElements} from './popup.js';
+import {similarAdsElements} from './popup.js';
 
 deactivateForm();
-createSimilarAdsPopup();
 
+const adForm = document.querySelector('.ad-form');
 const formResetButton = document.querySelector('.ad-form__reset');
 const formAddressField = document.querySelector('#address');
 
@@ -49,7 +48,12 @@ mainPinMarker.on('moveend', (evt) => {
   formAddressField.value = `${evt.target.getLatLng().lat.toFixed(5)}, ${evt.target.getLatLng().lng.toFixed(5)}`;
 });
 
-formResetButton.addEventListener('click', () => {
+formResetButton.addEventListener('click', (evt) => {
+  evt.preventDefault();
+
+  adForm.reset();
+  formAddressField.value = '35.68950, 139.69250';
+
   mainPinMarker.setLatLng({
     lat: 35.6895,
     lng: 139.6925,
@@ -61,35 +65,40 @@ formResetButton.addEventListener('click', () => {
   }, 12);
 });
 
-const points = [];
 
-similarAds.forEach(({location}) => {
-  const point = {
-    lat: location.lat,
-    lng: location.lng,
-  };
+const createAdsMapMarkers = (similarAds) => {
+  const points = [];
 
-  points.push(point);
-});
+  similarAds.forEach(({location}) => {
+    const point = {
+      lat: location.lat,
+      lng: location.lng,
+    };
 
-for (let i = 0; i < points.length; i++) {
-  const icon = L.icon({
-    iconUrl: 'img/pin.svg',
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
+    points.push(point);
   });
 
-  const marker = L.marker(
-    {
-      lat: points[i].lat,
-      lng: points[i].lng,
-    },
-    {
-      icon,
-    },
-  );
+  for (let i = 0; i < points.length; i++) {
+    const icon = L.icon({
+      iconUrl: 'img/pin.svg',
+      iconSize: [40, 40],
+      iconAnchor: [20, 40],
+    });
 
-  marker
-    .addTo(map)
-    .bindPopup(similarAdsElements[i]);
-}
+    const marker = L.marker(
+      {
+        lat: points[i].lat,
+        lng: points[i].lng,
+      },
+      {
+        icon,
+      },
+    );
+
+    marker
+      .addTo(map)
+      .bindPopup(similarAdsElements[i]);
+  }
+};
+
+export {createAdsMapMarkers};
