@@ -1,12 +1,10 @@
-import {similarAds} from './data.js';
-
 const similarAdsTemplate = document.querySelector('#card')
   .content
   .querySelector('.popup');
 
 const similarAdsElements = [];
 
-const createSimilarAdsPopup = () => {
+const createSimilarAdsPopup = (similarAds) => {
   similarAds.forEach(({author, offer}) => {
     const adElement = similarAdsTemplate.cloneNode(true);
 
@@ -47,20 +45,26 @@ const createSimilarAdsPopup = () => {
 
     adElement.querySelector('.popup__text--time').textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
 
-    !offer.features.length ?
-      adElement.querySelector('.popup__features').classList.add('hidden')
-      :
+    try {
       adElement.querySelector('.popup__features').textContent = offer.features;
+    } catch (err) {
+      adElement.querySelector('.popup__features').classList.add('hidden');
+    }
 
-    !offer.description.length ?
-      adElement.querySelector('.popup__description').classList.add('hidden')
-      :
+    try {
       adElement.querySelector('.popup__description').textContent = offer.description;
+    } catch (err) {
+      adElement.querySelector('.popup__description').classList.add('hidden');
+    }
 
     adElement.querySelector('.popup__photos').innerHTML = '';
-    offer.photos.forEach((photo) => {
-      adElement.querySelector('.popup__photos').insertAdjacentHTML('beforeend', `<img src="${photo}" class="popup__photo" width="45" height="40" alt="Фотография жилья">`);
-    });
+    try {
+      offer.photos.forEach((photo) => {
+        adElement.querySelector('.popup__photos').insertAdjacentHTML('beforeend', `<img src="${photo}" class="popup__photo" width="45" height="40" alt="Фотография жилья">`);
+      });
+    } catch (err) {
+      adElement.querySelector('.popup__photos').classList.add('hidden');
+    }
 
     adElement.querySelector('.popup__avatar').src = author.avatar;
 
