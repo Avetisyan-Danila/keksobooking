@@ -1,5 +1,8 @@
+const DATA_SERVER = 'https://23.javascript.pages.academy/keksobooking/data';
+const SENDING_DATA_SERVER = 'https://23.javascript.pages.academy/keksobooking';
+
 const getData = (onSuccess, onFail) => {
-  fetch('https://23.javascript.pages.academy/keksobooking/data')
+  fetch(DATA_SERVER)
     .then((response) => response.json())
     .then((ads) => {
       onSuccess(ads);
@@ -11,7 +14,7 @@ const getData = (onSuccess, onFail) => {
 
 const sendData = (onSuccess, onFail, body) => {
   fetch(
-    'https://23.javascript.pages.academy/keksobooking',
+    SENDING_DATA_SERVER,
     {
       method: 'POST',
       enctype: 'multipart/form-data',

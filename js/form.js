@@ -8,14 +8,6 @@ const formAddressField = document.querySelector('#address');
 const formMapFilter = document.querySelector('.map__filters');
 const formMapFilterElements = formMapFilter.querySelectorAll('.map__filter');
 
-const successTemplate = document.querySelector('#success')
-  .content
-  .querySelector('.success');
-
-const errorTemplate = document.querySelector('#error')
-  .content
-  .querySelector('.error');
-
 const deactivateForm = () => {
   adForm.classList.add('ad-form--disabled');
   adFormElements.forEach((element) => {
@@ -39,6 +31,14 @@ const activateForm = () => {
     element.removeAttribute('disabled');
   });
 };
+
+const successTemplate = document.querySelector('#success')
+  .content
+  .querySelector('.success');
+
+const errorTemplate = document.querySelector('#error')
+  .content
+  .querySelector('.error');
 
 const adFormSubmit = () => {
   adForm.addEventListener('submit', (evt) => {

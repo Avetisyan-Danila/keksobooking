@@ -3,6 +3,12 @@ import {createSimilarAdsPopup} from './popup.js';
 
 deactivateForm();
 
+const DEFAULT_COORDINATES = {
+  lat: 35.68950,
+  lng: 139.69250,
+  zoom: 12,
+};
+
 const adForm = document.querySelector('.ad-form');
 const formResetButton = document.querySelector('.ad-form__reset');
 const formAddressField = document.querySelector('#address');
@@ -12,9 +18,9 @@ const map = L.map('map-canvas')
     activateForm();
   })
   .setView({
-    lat: 35.6895,
-    lng: 139.6925,
-  }, 12);
+    lat: DEFAULT_COORDINATES.lat,
+    lng: DEFAULT_COORDINATES.lng,
+  }, DEFAULT_COORDINATES.zoom);
 
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -31,8 +37,8 @@ const mainPinIcon = L.icon({
 
 const mainPinMarker = L.marker(
   {
-    lat: 35.6895,
-    lng: 139.6925,
+    lat: DEFAULT_COORDINATES.lat,
+    lng: DEFAULT_COORDINATES.lng,
   },
   {
     draggable: true,
@@ -52,17 +58,17 @@ formResetButton.addEventListener('click', (evt) => {
   evt.preventDefault();
 
   adForm.reset();
-  formAddressField.value = '35.68950, 139.69250';
+  formAddressField.value = `${DEFAULT_COORDINATES.lat  }, ${  DEFAULT_COORDINATES.lng}`;
 
   mainPinMarker.setLatLng({
-    lat: 35.6895,
-    lng: 139.6925,
+    lat: DEFAULT_COORDINATES.lat,
+    lng: DEFAULT_COORDINATES.lng,
   });
 
   map.setView({
-    lat: 35.6895,
-    lng: 139.6925,
-  }, 12);
+    lat: DEFAULT_COORDINATES.lat,
+    lng: DEFAULT_COORDINATES.lng,
+  }, DEFAULT_COORDINATES.zoom);
 });
 
 const ADS_COUNT = 10;
@@ -116,6 +122,8 @@ const setMapHousingFeaturesFilterChange = (cb) => {
   });
 };
 
+const HOUSE_PRICE_LOW = 10000;
+const HOUSE_PRICE_HIGH = 50000;
 
 const getAdsRank = (ad) => {
   let rank = 0;
@@ -124,15 +132,15 @@ const getAdsRank = (ad) => {
     rank += 1;
   }
 
-  if (ad.offer.price <= 10000 && mapHousingPriceSelect.value === 'low') {
+  if (ad.offer.price <= HOUSE_PRICE_LOW && mapHousingPriceSelect.value === 'low') {
     rank += 1;
   }
 
-  if (ad.offer.price >= 50000 && mapHousingPriceSelect.value === 'high') {
+  if (ad.offer.price >= HOUSE_PRICE_HIGH && mapHousingPriceSelect.value === 'high') {
     rank += 1;
   }
 
-  if (ad.offer.price >= 10000 && ad.offer.price <= 50000 && mapHousingPriceSelect.value === 'middle') {
+  if (ad.offer.price >= HOUSE_PRICE_LOW && ad.offer.price <= HOUSE_PRICE_HIGH && mapHousingPriceSelect.value === 'middle') {
     rank += 1;
   }
 
